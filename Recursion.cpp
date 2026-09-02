@@ -86,21 +86,68 @@ using namespace std;
 // ***
 // **
 // *
-void triangle1(int r, int c){
-    if(r == 0) return;
-    if(r > c){
-        cout << "* ";
-        triangle1(r, c+1);
+// void triangle1(int r, int c){
+//     if(r == 0) return;
+//     if(r > c){
+//         cout << "* ";
+//         triangle1(r, c+1);
+//     }
+//     else{
+//         cout << endl;
+//         triangle1(r-1, 0);
+//     }
+// }
+
+// MergeSort
+vector<int> merge(vector<int>left, vector<int>right){
+    int i=0, j=0;
+    vector<int> ans;
+
+    while(i < left.size() && j < right.size()){
+        if(left[i] < right[j]) {
+            ans.push_back(left[i]);
+            i++;
+        }
+        else{
+            ans.push_back(right[j]);
+            j++;
+        }
     }
-    else{
-        cout << endl;
-        triangle1(r-1, 0);
+    while(i < left.size()){
+        ans.push_back(left[i]);
+        i++;
     }
+    while(j < right.size()){
+        ans.push_back(right[j]);
+        j++;
+    }
+    return ans;
+}
+
+vector<int> mergeSort(vector<int> arr){
+    if(arr.size() == 1) return arr;
+    int mid = arr.size()/2;
+
+    vector<int> left(arr.begin(), arr.begin() + mid);
+    vector<int> right(arr.begin() + mid, arr.end());
+    
+    left = mergeSort(left);
+    right = mergeSort(right);
+
+    return merge(left, right);
 }
 
 int main(){
-    int n, m;
-    cin >> n >> m;
-    triangle1(n, m);
+    int n;
+    cin >> n;
+    vector<int> arr(n);
+
+    for(int i=0; i<n; i++) cin >> arr[i];
+    vector <int> ans = mergeSort(arr);
+
+    for(int i=0; i<n; i++){
+        cout << ans[i] << " " ;
+    }
+
     return 0;
 }
