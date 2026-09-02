@@ -68,11 +68,39 @@ using namespace std;
 //     return helper(n, 0);
 // }
 
+// Check whether the array is sorted or not
+// bool helper(vector<int> arr, int index, int n){
+//     if(index == (n-1)) return true;
+//     return (arr[index] <= arr[index+1]) && helper(arr, index+1, n);
+// }
+
+// Linear Search
+// bool ls(vector <int> &arr, int target, int index){
+//     if(index == arr.size()) return false;
+//     if(arr[index] == target) return true;
+//     return ls(arr, target, index+1);
+// }
+
+// Triangle1
+// ****
+// ***
+// **
+// *
+void triangle1(int r, int c){
+    if(r == 0) return;
+    if(r > c){
+        cout << "* ";
+        triangle1(r, c+1);
+    }
+    else{
+        cout << endl;
+        triangle1(r-1, 0);
+    }
+}
 
 int main(){
-    int n;
-    cin >> n;
-    
-    cout << s << endl;
+    int n, m;
+    cin >> n >> m;
+    triangle1(n, m);
     return 0;
 }
