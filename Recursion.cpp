@@ -99,42 +99,62 @@ using namespace std;
 // }
 
 // MergeSort
-vector<int> merge(vector<int>left, vector<int>right){
-    int i=0, j=0;
-    vector<int> ans;
+// vector<int> merge(vector<int>left, vector<int>right){
+//     int i=0, j=0;
+//     vector<int> ans;
 
-    while(i < left.size() && j < right.size()){
-        if(left[i] < right[j]) {
-            ans.push_back(left[i]);
-            i++;
-        }
-        else{
-            ans.push_back(right[j]);
-            j++;
-        }
+//     while(i < left.size() && j < right.size()){
+//         if(left[i] < right[j]) {
+//             ans.push_back(left[i]);
+//             i++;
+//         }
+//         else{
+//             ans.push_back(right[j]);
+//             j++;
+//         }
+//     }
+//     while(i < left.size()){
+//         ans.push_back(left[i]);
+//         i++;
+//     }
+//     while(j < right.size()){
+//         ans.push_back(right[j]);
+//         j++;
+//     }
+//     return ans;
+// }
+
+// vector<int> mergeSort(vector<int> arr){
+//     if(arr.size() == 1) return arr;
+//     int mid = arr.size()/2;
+
+//     vector<int> left(arr.begin(), arr.begin() + mid);
+//     vector<int> right(arr.begin() + mid, arr.end());
+
+//     left = mergeSort(left);
+//     right = mergeSort(right);
+
+//     return merge(left, right);
+// }
+
+// QuickSort
+
+void QS(vector <int> &arr, int low, int high){
+    if(low >= high) return;
+    int s = low;
+    int e = high;
+    int mid = s + (e-s)/2;
+    int pivot = arr[mid];
+    while(arr[s] < pivot) s++;
+    while(arr[e] > pivot) e--;
+    if(s <= e){
+        int temp = arr[e];
+        arr[e] = arr[s];
+        arr[s] = temp;
+        s++, e--;
     }
-    while(i < left.size()){
-        ans.push_back(left[i]);
-        i++;
-    }
-    while(j < right.size()){
-        ans.push_back(right[j]);
-        j++;
-    }
-    return ans;
-}
-
-vector<int> mergeSort(vector<int> arr){
-    if(arr.size() == 1) return arr;
-    int mid = arr.size()/2;
-
-    vector<int> left(arr.begin(), arr.begin() + mid);
-    vector<int> right(arr.begin() + mid, arr.end());
-    
-    left = mergeSort(left);
-    right = mergeSort(right);
-
-    return merge(left, right);
+    QS(arr, low, e);
+    QS(arr, s, high);
 }
 
 int main(){
@@ -143,10 +163,10 @@ int main(){
     vector<int> arr(n);
 
     for(int i=0; i<n; i++) cin >> arr[i];
-    vector <int> ans = mergeSort(arr);
+    QS(arr, 0, arr.size()-1);
 
     for(int i=0; i<n; i++){
-        cout << ans[i] << " " ;
+        cout << arr[i] << " " ;
     }
 
     return 0;
