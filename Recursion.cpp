@@ -138,36 +138,81 @@ using namespace std;
 // }
 
 // QuickSort
+// void QS(vector <int> &arr, int low, int high){
+//     if(low >= high) return;
+//     int s = low;
+//     int e = high;
+//     int mid = s + (e-s)/2;
+//     int pivot = arr[mid];
+//     while(arr[s] < pivot) s++;
+//     while(arr[e] > pivot) e--;
+//     if(s <= e){
+//         int temp = arr[e];
+//         arr[e] = arr[s];
+//         arr[s] = temp;
+//         s++, e--;
+//     }
+//     QS(arr, low, e);
+//     QS(arr, s, high);
+// }
 
-void QS(vector <int> &arr, int low, int high){
-    if(low >= high) return;
-    int s = low;
-    int e = high;
-    int mid = s + (e-s)/2;
-    int pivot = arr[mid];
-    while(arr[s] < pivot) s++;
-    while(arr[e] > pivot) e--;
-    if(s <= e){
-        int temp = arr[e];
-        arr[e] = arr[s];
-        arr[s] = temp;
-        s++, e--;
+// Printing subsequence
+// void subSeq(string p, string up){
+//     if(up.empty()){
+//         cout << p << endl;
+//         return;
+// }
+//     char ch = up[0];
+//     subSeq(p + ch, up.substr(1));
+//     subSeq(p, up.substr(1));
+// }
+
+// Subsets/ Powersets
+// void allSubsets(vector<int> &arr, vector<int> &temp, vector<vector<int>> &ans, int idx){
+//     if(idx == arr.size()){
+//         ans.push_back(temp);
+//         return;
+//     }
+//     // Include
+//     temp.push_back(arr[idx]);
+//     allSubsets(arr, temp, ans, idx+1);
+//     // Backtrack
+//     temp.pop_back();
+//     //Exclude
+//     allSubsets(arr, temp, ans, idx+1);
+// }
+
+// vector<vector<int>> giveAllSets(vector<int> &arr){
+//     vector<int>temp;
+//     vector<vector<int>> ans;
+//     allSubsets(arr, temp, ans, 0);
+//     return ans;
+// }
+
+// For duplicates allSubsets
+
+void giveAll(vector<int> &arr, vector<vector<int>> &ans, vector<int> temp, int idx){
+    if(idx == arr.size()){
+        ans.push_back(temp);
     }
-    QS(arr, low, e);
-    QS(arr, s, high);
+    temp.push_back(arr[idx]);
+    giveAll(arr, ans, temp, idx+1);
+    temp.pop_back();
+
+    idx = idx+1;
+    while(idx < arr.size() && arr[idx-1] == arr[idx]) idx++;
+    giveAll(arr, ans, temp, idx);
+}
+
+vector<vector<int>> allSubsets(vector<int> &arr){
+    sort(arr.begin(), arr.end());
+    vector<int> temp;
+    vector<vector<int>> ans;
+    giveAll(arr, ans, temp, 0);
+    return ans;
 }
 
 int main(){
-    int n;
-    cin >> n;
-    vector<int> arr(n);
-
-    for(int i=0; i<n; i++) cin >> arr[i];
-    QS(arr, 0, arr.size()-1);
-
-    for(int i=0; i<n; i++){
-        cout << arr[i] << " " ;
-    }
-
+    int ans[] = {1,2,3};
     return 0;
 }
